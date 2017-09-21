@@ -15,7 +15,6 @@ class ApiTest(APITestCase):
 		self.profile_url = reverse("profile-list")
 		self.token_url = reverse("auth-token")
 
-	@unittest.skip("pass")
 	def test_should_be_obtain_token(self):
 
 		user = User.objects.create_user(username="marlysson",email="marlysson5@gmail.com",password="hellodjango")
