@@ -4,11 +4,7 @@
 
 > Como foi implementado
 
-Foi utilizado os modelos do django refletindo um diagrama de classes elaborado. Se valendo pelos relacionamentos de ForeignKey e ManyToManyField
-
-> Arquivos trabalhados:
-
-https://github.com/Marlysson/finhis/blob/master/core/models.py
+Foi utilizado os modelos do django refletindo um diagrama de classes elaborado. Se valendo pelos relacionamentos de ForeignKey e ManyToManyField, e estão localizados em : [models.py](https://github.com/Marlysson/finhis/blob/master/core/models.py)
 
 > Como validar e testar
 
@@ -38,4 +34,47 @@ E para executar basta entrar na raiz do projeto e executar o comando:
 ```
 python manage.py test core.tests
 ```
+
+## Questão 3 ( Autenticação )
+
+> Como foi feito
+
+Foi usado a classe de permissão padrão do DRF chamada ```IsAuthenticated``` e para cada classe que fosse necessário era adicionada à uma tupla de um atributo responsável por mapear atributos de permissões na [view.py](https://github.com/Marlysson/finhis/blob/master/core/views.py).
+
+#### Views autenticadas
+
+- ProfileViewList
+- RequestCategoryViewList
+- RequestCategoryViewDetail
+- MovementViewDetail
+
+#### Views não-autenticadas
+
+- ProfileViewDetail
+- CategoryViewList
+- CategoryViewDetail
+- MovementViewDetail
+
+> Exemplo de código
+
+```
+class RequestCategoryViewList(RequestCategoryDataRepeated,generics.ListCreateAPIView):
+	name = 'request-category-list'
+	permission_classes = (IsAuthenticated,)
+
+```
+
+> Como validar e testar
+
+Há duas formas: acessando via browser e vendo a mensagem solicitando a permissão, ou executar os testes da aplicação, como é dito na questão abaixo.
+
+## Questão 4 ( Documentação )
+
+> Como foi implementado
+
+Basicamente foi instaldo o drf-docs via pip , adicionado a aplicação no INSTALLED_APPS e depois mapeado a url para ser acessada, que está localizada em : [urls.py](https://github.com/Marlysson/finhis/blob/master/finhis/urls.py)
+
+> Como validar e testar
+
+Basicamente rodando o projeto e acessando a [url da documentação](http://localhost:8000/docs)
 
