@@ -78,8 +78,9 @@ class Notification(models.Model):
 
 
 class Category(models.Model):
+
     name = models.CharField(max_length=10)
-    icon = models.URLField()
+    icon = models.CharField(max_length=20)
 
 
 class RequestCategory(models.Model):

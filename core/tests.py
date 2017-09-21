@@ -13,6 +13,7 @@ class ApiTest(APITestCase):
 	def setUp(self):
 		self.category_url = reverse("category-list")
 		self.profile_url = reverse("profile-list")
+		self.requests = reverse("request-category-list")
 		self.token_url = reverse("auth-token")
 
 	def test_should_be_obtain_token(self):
@@ -57,3 +58,8 @@ class ApiTest(APITestCase):
 
 		response = self.client.post(self.profile_url,profile_data,format="json")
 		self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+
+	def test_should_return_401_status_on_request_page_authenticate(self):
+
+		response = self.client.get(self.requests)
+		self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)
