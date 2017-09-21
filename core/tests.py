@@ -22,14 +22,12 @@ class ApiTest(APITestCase):
 
 		data = {
 			"username":user.username,
-			"password":user.password
+			"password":'hellodjango'
 		}
-
-		print(data)
 
 		token_response = self.client.post(self.token_url,data,format="json")
 
-		self.assertEqual(token_response.status_code,status.HTTP_201_CREATED)
+		self.assertEqual(token_response.status_code,status.HTTP_200_OK)
 
 	def test_create_a_category(self):
 		
@@ -43,7 +41,6 @@ class ApiTest(APITestCase):
 		self.assertEqual(response.status_code,status.HTTP_201_CREATED)
 		self.assertEqual(Category.objects.count(),1)
 
-	@unittest.skip("pass")
 	def test_create_a_profile_and_create_a_user_together(self):
 
 		profile_data  = {
