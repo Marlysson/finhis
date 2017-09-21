@@ -105,3 +105,30 @@ REST_FRAMEWORK.update(PAGINATION_REST)
 REST_FRAMEWORK.update(THROTTLING_REST)
 
 ```
+
+## Questão 6 ( Filtros , buscas e ordenação )
+
+## Questão 7 ( Testes )
+
+> Como foi feito
+
+Para essa funcionalidade foi utilizado o arquivo [tests.py](https://github.com/Marlysson/finhis/blob/master/core/tests.py).
+
+Para fazer as requisições para os _endpoints_ da api foi utilizado a classe base ```APIClient``` , pois como a minha classe de testes herda da ```APITestCase``` então por herança eu teria disponível um atributo chamado : ```self.client``` pronto só para fazer as requisições.
+
+Exemplo:
+
+> self.client.post(url, data, format="json")
+> self.client.get(url)
+
+...
+
+> Como validar e testar
+
+Para isso basta executar o comando padrão para rodar a bateria de testes:
+
+```
+python manage.py test core.tests
+```
+
+Por enquanto é isso :smile:
