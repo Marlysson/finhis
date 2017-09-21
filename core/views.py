@@ -9,45 +9,38 @@ from rest_framework import generics
 from rest_framework.reverse import reverse
 
 #App
-from .mixins import ProfileDataRepeated, CategoryDataRepeated, RequestCategoryDataRepeated
-from .models import RequestCategory
-from .serializers import RequestCategorySerializer
+from .mixins import CategoryDataRepeated, RequestCategoryDataRepeated
+from .models import RequestCategory, Profile
+from .serializers import UserSerializer, RequestCategorySerializer, ProfileSerializer
 
-class ProfileViewList(ProfileDataRepeated, generics.ListCreateAPIView):
-
+class ProfileViewList(generics.ListCreateAPIView):
+	queryset = Profile.objects.all()
+	serializer_class = ProfileSerializer
 	name = 'profile-list'
 
-	def perform_create(self,serializer):
-		
+	def perform_create(self, serializer):
+
 		user_data = {
-			"username"  : request.data.get("username"),
-			"first_name": request.data.get("first_name"),
-			"last_name" : request.data.get("last_name"),
-			"email"     : request.data.get("email"),
-			"password"  : request.data.get("password"),
+			"user":{
+				"username"  : self.request.data.get("username"),
+				"first_name": self.request.data.get("first_name"),
+				"last_name" : self.request.data.get("last_name"),
+				"email"     : self.request.data.get("email"),
+				"password"  : self.request.data.get("password")
+			}
 		}		
-
-		profile_data = {
-			"limit_spending_monthly": request.data.get("limit_spending_monthly")
-		}
-
-		user_serializer = UserSerializer(data=user_data)
-
-		if user_serializer.is_valid():
-
-			user = User.objects.create_user(**user_serializer.validated_data)
-			
-			serializer.save(
-				limit_spending_monthly=request.data.get("limit_spending_monthly"),
-				user=user
-			)
-
-			return Response(profile_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-		return Response(user_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+		
+		user = User.objects.create_user(**user_data)
+		
+		serializer.save(
+			limit_spending_monthly=self.request.data.get("limit_spending_monthly"),
+			user=user
+		)
 
 
-class ProfileViewDetail(ProfileDataRepeated,generics.RetrieveUpdateDestroyAPIView):
+class ProfileViewDetail(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Profile.objects.all()
+	serializer_class = ProfileSerializer
 	name = 'profile-detail'
 
 class CategoryViewList(CategoryDataRepeated,generics.ListCreateAPIView):
