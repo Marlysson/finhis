@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
 
-    total_amount = models.DecimalField(max_digits=6,decimal_places=2)
+    total_amount = models.DecimalField(max_digits=6,decimal_places=2,default=0)
     user = models.OneToOneField(User)
     categories = models.ManyToManyField('Category')
-    limit_billing_monthly = models.DecimalField(max_digits=6,decimal_places=2)
+    limit_spending_monthly = models.DecimalField(max_digits=6,decimal_places=2)
 
     @property
     def username(self):
@@ -15,6 +15,18 @@ class Profile(models.Model):
     @property
     def first_name(self):
         return self.user.first_name
+
+    @property
+    def email(self):
+        return self.user.email
+
+    @property
+    def password(self):
+        return self.user.password
+
+    @property
+    def last_name(self):
+        return self.user.last_name
 
 
 class Tranfer(models.Model):
