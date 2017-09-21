@@ -11,13 +11,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
 #App
-from .mixins import CategoryDataRepeated, RequestCategoryDataRepeated
+from .mixins import CategoryDataRepeated, RequestCategoryDataRepeated, MovementDataRepeated,ProfileDataRepeated
 from .models import RequestCategory, Profile
 from .serializers import UserSerializer, RequestCategorySerializer, ProfileSerializer
 
-class ProfileViewList(generics.ListCreateAPIView):
-	queryset = Profile.objects.all()
-	serializer_class = ProfileSerializer
+class ProfileViewList(ProfileDataRepeated, generics.ListCreateAPIView):
 	name = 'profile-list'
 
 	def perform_create(self, serializer):
@@ -30,9 +28,7 @@ class ProfileViewList(generics.ListCreateAPIView):
 			user=user
 		)
 
-class ProfileViewDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Profile.objects.all()
-	serializer_class = ProfileSerializer
+class ProfileViewDetail(ProfileDataRepeated, generics.RetrieveUpdateDestroyAPIView):
 	name = 'profile-detail'
 
 class CategoryViewList(CategoryDataRepeated,generics.ListCreateAPIView):
@@ -49,6 +45,19 @@ class RequestCategoryViewDetail(RequestCategoryDataRepeated,generics.RetrieveUpd
 	name = 'request-category-detail'
 	permission_classes = (IsAuthenticated,)
 
+class MovementViewList(MovementDataRepeated, generics.ListCreateAPIView):
+	permission_classes = (IsAuthenticated,)	
+	name = 'movement-list'
+
+	def perform_create(self,serializer):
+		serializer.save(profile=self.request.user.profile)
+
+	def get_queryset(self):
+		return Movement.objects.filter(profile=self.request.user.profile)
+
+class MovementViewDetail(MovementDataRepeated,generics.RetrieveUpdateDestroyAPIView):
+	name = 'movement-detail'
+
 class ApiRoot(generics.GenericAPIView):
 
     name = 'api-root'
@@ -58,7 +67,8 @@ class ApiRoot(generics.GenericAPIView):
     	data_api = {
             'profiles': reverse(ProfileViewList.name,request=request),
             'categories': reverse(CategoryViewList.name,request=request),
-            'requests': reverse(RequestCategoryViewList.name,request=request)
+            'requests': reverse(RequestCategoryViewList.name,request=request),
+            'movements': reverse(MovementViewList.name,request=request)
     	}
 
     	return Response(data_api)

@@ -24,6 +24,14 @@ urlpatterns = [
         views.CategoryViewDetail.as_view(),
         name=views.CategoryViewDetail.name),
 	
+        url(r'^movements/$', 
+        views.MovementViewList.as_view(), 
+        name=views.MovementViewList.name),
+
+        url(r'^movements/(?P<pk>[0-9]+)/$', 
+        views.MovementViewDetail.as_view(),
+        name=views.MovementViewDetail.name),
+
 	url(r'^requests/$', 
         views.RequestCategoryViewList.as_view(), 
         name=views.RequestCategoryViewList.name),

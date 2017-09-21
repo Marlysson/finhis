@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     # Third party
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'rest_framework_docs'
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,7 @@ STATIC_URL = '/static/'
 AUTHENTICATION_REST = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     )
 }
 
