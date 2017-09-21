@@ -66,7 +66,7 @@ class RequestCategoryViewList(RequestCategoryDataRepeated,generics.ListCreateAPI
 
 > Como validar e testar
 
-Há duas formas: acessando via browser e vendo a mensagem solicitando a permissão, ou executar os testes da aplicação, como é dito na questão abaixo.
+Há duas formas: acessando via browser e vendo a mensagem solicitando a permissão, ou executar os testes da aplicação, como é dito na questão acima.
 
 ## Questão 4 ( Documentação )
 
@@ -78,3 +78,30 @@ Basicamente foi instaldo o drf-docs via pip , adicionado a aplicação no INSTAL
 
 Basicamente rodando o projeto e acessando a [url da documentação](http://localhost:8000/docs)
 
+
+## Questão 5 ( Paginação e Throttling)
+
+> Como foi feito
+
+Basicamente foi utilizado os parâmetros default que o próprio DRF provê, e só bastou adicionar eles no arquivo [settings.py](https://github.com/Marlysson/finhis/blob/master/finhis/settings.py)
+
+Código do trecho:
+
+```
+PAGINATION_REST = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5
+}
+
+THROTTLING_REST = {
+    'DEFAULT_THROTTLE_CLASSES': ('rest_framework.throttling.AnonRateThrottle',
+                                 'rest_framework.throttling.UserRateThrottle',),
+
+    'DEFAULT_THROTTLE_RATES': {'anon': '10/hour', 'user': '120/hour'}
+}
+
+REST_FRAMEWORK = {}
+REST_FRAMEWORK.update(PAGINATION_REST)
+REST_FRAMEWORK.update(THROTTLING_REST)
+
+```
