@@ -13,10 +13,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 	user = UserSerializer()
 
-	def create(self,validated_data):
-		print(validated_data.pop("user"))
-
-		return None
 	class Meta:
 		model = Profile
 		fields = ('user', 'limit_spending_monthly')
