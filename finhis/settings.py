@@ -120,20 +120,28 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATIC_URL = '/static/'
 
 
-REST_FRAMEWORK = {
+AUTHENTICATION_REST = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     )
 }
 
-REST_FRAMEWORK = {
+PAGINATION_REST = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 5
 }
+
+THROTTLING_REST = {
+    'DEFAULT_THROTTLE_CLASSES': ('rest_framework.throttling.AnonRateThrottle',
+                                 'rest_framework.throttling.UserRateThrottle',),
+
+    'DEFAULT_THROTTLE_RATES': {'anon': '5/hour', 'user': '50/hour'}
+}
+
+REST_FRAMEWORK = {}
+REST_FRAMEWORK.update(AUTHENTICATION_REST)
+REST_FRAMEWORK.update(PAGINATION_REST)
+REST_FRAMEWORK.update(THROTTLING_REST)
