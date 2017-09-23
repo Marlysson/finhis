@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Movimentos - Finhis</title>
+	<link rel="stylesheet" type="text/css" href="static/css/estilo.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+	<div class="col-l8 offset-l3">
+		<div id="app" method="post">
+
+			<div class="logo">
+				<h1>Fh</h1>
+			</div>
+
+			<h3 class="center-align title">Your movements</h3>
+
+			<button class="btn-signup" style="margin:0 auto;display: block;font-weight: bold;text-transform:uppercase;" v-on:click="logoff">Logoff</button>
+
+			<p v-if="movements.length == 0" class="center-align">You don't have any movement done until now.</p>
+
+			<ul class="movements-container">
+				<li class="movement" v-bind:class="[movement.operation == 'INCREASE' ? 'increase' : 'decrease']"
+					v-for="movement in movements" v-if="movements.length > 0">
+					<p class="movement-title">{{ movement.description }}</p>
+					<p class="movement-amount">R$ {{movement.amount}}</p>
+					<p class="movement-category">{{movement.category.name}}</p>
+				</li>
+			</ul>
+
+
+			<p class="new_movement">+</p>
+		</div>
+	</div>
+
+</div>
+	
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+
+<script type="text/javascript">
+		
+	app = new Vue({
+
+		el:"#app",
+
+		data: {
+			movements : [],
+			token: "",
+		},
+
+		methods : {
+
+			logoff : function(){
+				localStorage.removeItem("token");
+				window.location = "index.html";
+			}
+
+		},
+
+		mounted() {
+
+			const token = localStorage.getItem("token");
+
+			if (token == null){
+				window.location = "login.html";
+			}else{
+
+				const auth = {'Authorization':'Token ' + token };
+				console.log(auth);
+
+				axios.get("http://localhost:8000/api/movements",{headers:auth})
+					.then((response) => {
+						
+						response.data.results.map((e) => {
+							console.log(e)
+							this.movements.push(e);
+
+						});
+
+					})
+					.catch((error) => {
+						console.log(error.response.data);
+					});
+
+			}
+		}
+	});
+
+</script>
+
+</body>
+</html>

@@ -1,44 +1,47 @@
 
 from django.conf.urls import url
-from core import views
+from core.views import *
+from rest_framework.authtoken import views
 
 urlpatterns = [
         
+        url(r'^token/', views.obtain_auth_token,name="auth-token"),
+
 	url(r'^$',
-        views.ApiRoot.as_view(),
-        name=views.ApiRoot.name),
+        ApiRoot.as_view(),
+        name=ApiRoot.name),
 
 	url(r'^profiles/$', 
-        views.ProfileViewList.as_view(), 
-        name=views.ProfileViewList.name),
+        ProfileViewList.as_view(), 
+        name=ProfileViewList.name),
 
 	url(r'^profiles/(?P<pk>[0-9]+)/$', 
-        views.ProfileViewDetail.as_view(),
-        name=views.ProfileViewDetail.name),
+        ProfileViewDetail.as_view(),
+        name=ProfileViewDetail.name),
 	
 	url(r'^categories/$', 
-        views.CategoryViewList.as_view(), 
-        name=views.CategoryViewList.name),
+        CategoryViewList.as_view(), 
+        name=CategoryViewList.name),
 
 	url(r'^categories/(?P<pk>[0-9]+)/$', 
-        views.CategoryViewDetail.as_view(),
-        name=views.CategoryViewDetail.name),
+        CategoryViewDetail.as_view(),
+        name=CategoryViewDetail.name),
 	
         url(r'^movements/$', 
-        views.MovementViewList.as_view(), 
-        name=views.MovementViewList.name),
+        MovementViewList.as_view(), 
+        name=MovementViewList.name),
 
         url(r'^movements/(?P<pk>[0-9]+)/$', 
-        views.MovementViewDetail.as_view(),
-        name=views.MovementViewDetail.name),
+        MovementViewDetail.as_view(),
+        name=MovementViewDetail.name),
 
 	url(r'^requests/$', 
-        views.RequestCategoryViewList.as_view(), 
-        name=views.RequestCategoryViewList.name),
+        RequestCategoryViewList.as_view(), 
+        name=RequestCategoryViewList.name),
 
 	url(r'^requests/(?P<pk>[0-9]+)/$', 
-        views.RequestCategoryViewDetail.as_view(),
-        name=views.RequestCategoryViewDetail.name),
+        RequestCategoryViewDetail.as_view(),
+        name=RequestCategoryViewDetail.name),
 	    	    
 
 ]

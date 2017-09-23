@@ -23,7 +23,7 @@ class ProfileViewList(ProfileDataRepeated, generics.ListCreateAPIView):
 
 	def perform_create(self, serializer):
 
-		data = self.request.data.dict()
+		data = self.request.data
 
 		if "user.username" in data:
 		
@@ -38,6 +38,8 @@ class ProfileViewList(ProfileDataRepeated, generics.ListCreateAPIView):
 		else:			
 			user = data.get("user")
 
+		print(user)
+		
 		user = User.objects.create_user(**user)
 		Token.objects.get_or_create(user=user)
 

@@ -20,26 +20,13 @@
 			</div>
 
 			<p class="title center-align">Financial Historic</p>
-			<h4 class="call-action center-align">Signup now</h4>
+			<h4 class="call-action center-align">Sign in</h4>
+
+			<p class="errors center-align" v-if="wrong_login">Credentials wrong.</p>
 
 			<div class="input-group">
 				<label>Username</label>
 				<input type="text" name="username" v-model="username">
-			</div>
-
-			<div class="input-group">
-				<label>First name</label>
-				<input type="text" name="first_name" v-model="first_name">
-			</div>
-
-			<div class="input-group">
-				<label>Last name</label>
-				<input type="text" name="last_name" v-model="last_name">
-			</div>
-
-			<div class="input-group">
-				<label>Email</label>
-				<input type="email" name="email" v-model="email">
 			</div>
 
 			<div class="input-group">
@@ -48,8 +35,8 @@
 			</div>
 
 			<div class="submit-area">
-				<input v-on:click.prevent="signup" type="submit" name="send" value="SIGNUP" class="btn-signup">
-				<a href="login.html" class="btn-login">LOGIN</a>
+				<input v-on:click.prevent="signin" type="submit" name="send" value="SIGNIN" class="btn-signup">
+				<a href="index.html" class="btn-login">SIGNUP</a>
 			</div>
 
 		</form>
@@ -75,32 +62,39 @@
 		data: {
 			username:"",
 			password:"",
-			first_name:"",
-			last_name:"",
-			email:"",
+			wrong_login: false
 		},
 
 		methods : {
-			signup: function(event){
+			signin : function(event){
 
-				data = {
-					user:{
-						username:this.username,
-						first_name:this.first_name,
-						last_name:this.last_name,
-						email:this.email,
-						password:this.password
-					}
-				}
+				data = {"username":app.username,"password":app.password}
 
-				axios.post("http://localhost:8000/api/profiles/",{"data":data})
-					.then(function(response){
+				axios.post("http://localhost:8000/api/token/",data)
+					.then((response) => {
+						
+						localStorage.setItem("token",response.data.token);
 						console.log(response.data);
-					}).catch(function(error){
+						
+						window.location = "movements.html";
+
+					}).catch((error) => {
+
+						app.wrong_login = !app.wrong_login;
+
 						console.log(error.response.data);
 					});
-			},
+
+			}
+		},
+
+		mounted(){
+
+			if ( localStorage.getItem("token") !== null ) {
+				window.location = "movements.html";
+			}
 		}
+
 	});
 
 </script>

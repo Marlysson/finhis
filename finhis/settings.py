@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     # Third party
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_docs'
+    'rest_framework_docs',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -147,3 +149,6 @@ REST_FRAMEWORK = {}
 REST_FRAMEWORK.update(AUTHENTICATION_REST)
 REST_FRAMEWORK.update(PAGINATION_REST)
 REST_FRAMEWORK.update(THROTTLING_REST)
+
+CORS_ORIGIN_ALLOW_ALL = True
+

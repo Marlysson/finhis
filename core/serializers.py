@@ -24,7 +24,7 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Category
-		fields = ('url',)
+		fields = ('url','name')
 
 class RequestCategorySerializer(serializers.ModelSerializer):
 
@@ -41,6 +41,7 @@ class MovementSerializer(serializers.HyperlinkedModelSerializer):
 
 	operation = serializers.SerializerMethodField()
 	profile = ProfileDetailSerializer(read_only=True)
+	category = CategorySerializer()
 
 	def get_operation(self,obj):
 		return obj.get_type_operation_display()
