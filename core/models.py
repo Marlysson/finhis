@@ -6,7 +6,7 @@ class Profile(models.Model):
     total_amount = models.DecimalField(max_digits=6,decimal_places=2,default=0)
     user = models.OneToOneField(User)
     categories = models.ManyToManyField('Category')
-    limit_spending_monthly = models.DecimalField(max_digits=6,decimal_places=2)
+    limit_spending_monthly = models.DecimalField(max_digits=6,decimal_places=2,null=True)
 
     @property
     def username(self):
@@ -28,6 +28,8 @@ class Profile(models.Model):
     def last_name(self):
         return self.user.last_name
 
+    def __str__(self):
+        return self.first_name
 
 class Tranfer(models.Model):
     amount = models.DecimalField(max_digits=6,decimal_places=2)
@@ -44,7 +46,7 @@ class Movement(models.Model):
 
     description = models.CharField(max_length=25)
     amount = models.DecimalField(max_digits=6,decimal_places=2)
-    profile = models.OneToOneField(Profile,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
     category = models.ForeignKey('Category')
     date = models.DateTimeField()
     type_operation = models.CharField(max_length=3,choices=OPERATIONS)
@@ -82,6 +84,8 @@ class Category(models.Model):
     name = models.CharField(max_length=10)
     icon = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
 
 class RequestCategory(models.Model):
 

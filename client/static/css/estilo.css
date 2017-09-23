@@ -1,0 +1,109 @@
+body{
+	padding:0;
+	margin:0;
+	background:#1976d2;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.logo{
+	width:90px;
+	height:85px;
+	border-radius:10px;
+	margin:30px auto 0;
+	background:#fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	width:400px;
+	margin:0px auto;
+	/*border:1px solid #000;*/
+}
+
+.center-align{
+	text-align:center;
+}
+
+.logo h1{
+	font-family: 'Montserrat Subrayada', sans-serif;
+	font-size:55px;
+	color:#1976d2;
+	font-weight: normal;
+}
+
+.title{
+	margin:15px 0;
+	font-size:25px;
+	font-family: "Century Gothic";
+	color:white;
+	font-weight: bold;
+}
+
+.call-action{
+	margin:0 0 20px;
+	font-size:25px;
+	color:#37474f;
+	font-weight: bold;
+}
+
+input[type=text],input[type=password], input[type=email]{
+	border-radius:5px;
+	padding:7px;
+	outline:none;
+	background:white;
+	width:70%;
+	border:none;
+	outline:none;
+	margin:0px auto 10px;
+	font-size:15px;
+}
+
+.btn-login, .btn-signup{
+	font-size:13px;
+	padding:5px 10px;
+	font-weight: bolder;
+}
+
+.btn-login{
+	text-decoration:none;
+	font-weight: bold;
+	border:none;
+	color:white;
+	border:1px solid #1976d2;
+	transition:border 0.3s;
+}
+
+.btn-login:hover{
+	border:1px solid #fff;
+}
+
+.btn-signup{
+	background:white;
+	color:#1976d2;
+	background:white;
+	border:none;
+}
+
+.submit-area{
+	width:73%;
+	margin:15px auto 0;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.input-group{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.input-group label{
+	font-weight: bold;
+	color:white;
+	margin-left:55px;
+	margin-bottom:5px;
+}

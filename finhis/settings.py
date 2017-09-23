@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # Project
     'core',
-
+    
     # Third party
     'rest_framework',
     'rest_framework.authtoken',
@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'UTC'
 
@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 AUTHENTICATION_REST = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 

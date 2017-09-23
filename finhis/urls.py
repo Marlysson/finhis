@@ -20,8 +20,7 @@ from rest_framework.authtoken import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('core.urls')),
-    url(r'^auth',include('rest_framework.urls')),
+    url(r'^api/', include('core.urls')),
     url(r'^token/', views.obtain_auth_token,name="auth-token"),
     url(r'^docs$', include('rest_framework_docs.urls'))
 ]

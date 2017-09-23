@@ -15,13 +15,16 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Profile
-		fields = ('user', 'limit_spending_monthly')
+		fields = ('user', 'total_amount', 'limit_spending_monthly')
+		extra_kwargs = {
+			"total_amount":{"read_only":True}
+		}
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Category
-		fields = ('name', 'icon')
+		fields = ('url',)
 
 class RequestCategorySerializer(serializers.ModelSerializer):
 
@@ -29,13 +32,24 @@ class RequestCategorySerializer(serializers.ModelSerializer):
 		model = RequestCategory
 		fields = ('name', 'profile', 'approved')
 
-class MovementSerializer(serializers.ModelSerializer):
+class ProfileDetailSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Profile
+		fields = ('url',)
 
-	type_operation = serializers.SerializerMethodField()
+class MovementSerializer(serializers.HyperlinkedModelSerializer):
+
+	operation = serializers.SerializerMethodField()
+	profile = ProfileDetailSerializer(read_only=True)
+
+	def get_operation(self,obj):
+		return obj.get_type_operation_display()
 
 	class Meta:
 		model = Movement
-		fields = ('description','amount','profile','category','date','type_operation')
+		fields = ('url', 'description','amount','profile','category','date','operation',"type_operation")
 
-	def get_type_operation(self,obj):
-		return self.type_operation.get_type_operation_display()
+		extra_kwargs = {
+			"date": {"read_only":True},
+			"type_operation":{"write_only":True}
+			}
